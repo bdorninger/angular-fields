@@ -7,6 +7,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+
 import { VisibilityTrackEvent } from './track-visibility.directive';
 import {
   allData,
@@ -94,6 +95,8 @@ export class AppComponent implements AfterViewChecked {
     // return document.querySelector('textarea');
     return el.querySelector('#ifield') ?? undefined;
   }
+
+  findComponent(el: Element) {}
 
   blurCB(ev: Event) {
     // console.log('blurring', ev.target);

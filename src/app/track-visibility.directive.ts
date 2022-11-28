@@ -2,12 +2,19 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
+  Host,
+  Inject,
+  InjectionToken,
   Input,
   NgZone,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
+  Self,
+  ViewContainerRef,
 } from '@angular/core';
+import { ComponentMeta, typeInjectionToken } from './comp-meta.directive';
 
 export interface VisibilityTrackEvent {
   element: Element;
@@ -26,8 +33,17 @@ export class TrackVisibilityDirective implements OnInit, OnDestroy {
   @Output()
   public readonly visibility = new EventEmitter<VisibilityTrackEvent>();
 
-  constructor(private el: ElementRef<HTMLElement>, private ngZone: NgZone) {
+  constructor(
+    @Host()
+    @Self()
+    @Optional()
+    @Inject(typeInjectionToken)
+    private hostComp: ComponentMeta | null,
+    private el: ElementRef<HTMLElement>,
+    private ngZone: NgZone
+  ) {
     // console.log('trackVisDir', this.el, this.ngZone);
+    console.log(`dir ctor`, (this.hostComp as any)._lContainer, this.hostComp);
   }
 
   public ngOnInit(): void {
