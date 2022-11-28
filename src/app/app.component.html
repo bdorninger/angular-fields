@@ -1,0 +1,50 @@
+<div
+  #outerContainer
+  class="outer-container"
+  pFocusTrap
+  (click)="onClick($event)"
+>
+  <div>
+    <label>{{ name }}</label>
+  </div>
+  <textarea #textArea></textarea>
+  <button (click)="onFocBtClick()">focus</button>
+  <div id="cbgroup" (focusout)="onCBLostFocus($event)">
+    <label for="sel">Select input</label>
+    <input
+      id="sel"
+      type="checkbox"
+      [(ngModel)]="inputSelector"
+      (change)="blurCB($event)"
+    />
+  </div>
+  <div>
+    <p-autoComplete
+      *ngIf="!inputSelector"
+      #inputField
+      trackVisibility
+      (visibility)="onVisibilityChange($event)"
+      inputId="ifield"
+      [(ngModel)]="valueProvider.value"
+      [showEmptyMessage]="true"
+      [suggestions]="valueProvider.suggestions"
+      (completeMethod)="onComplete($event)"
+      (change)="valueProvider.onChange($event)"
+      [minLength]="1"
+      field="name"
+    ></p-autoComplete>
+  </div>
+  <div>
+    <p-inputNumber
+      class="num"
+      *ngIf="inputSelector"
+      trackVisibility
+      (visibility)="onVisibilityChange($event)"
+      #inputField
+      inputId="ifield"
+      [(ngModel)]="valueProvider.value"
+      [minFractionDigits]="0"
+      [maxFractionDigits]="2"
+    ></p-inputNumber>
+  </div>
+</div>
