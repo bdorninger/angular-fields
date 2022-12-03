@@ -1,16 +1,16 @@
 import {
   AfterViewChecked,
+  AfterViewInit,
   Component,
-  ComponentRef,
   ElementRef,
   VERSION,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { typeInjectionToken } from './comp-meta.directive';
 
 import { VisibilityTrackEvent } from './track-visibility.directive';
 import {
-  allData,
   NumValueProvider,
   StrValueProvider,
   ValueProvider,
@@ -21,7 +21,7 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements AfterViewChecked {
+export class AppComponent implements AfterViewInit, AfterViewChecked {
   name = 'Angular ' + VERSION.major;
 
   @ViewChild('textArea', {
@@ -29,6 +29,9 @@ export class AppComponent implements AfterViewChecked {
     static: false,
   })
   textArea: ElementRef;
+
+  @ViewChild('genspace', { read: ViewContainerRef, static: true })
+  genspace: ViewContainerRef;
 
   valueProvider?: ValueProvider<unknown>;
 
@@ -53,6 +56,21 @@ export class AppComponent implements AfterViewChecked {
 
   onFocusIn(event: FocusEvent) {
     console.log('FOCUS IN', event);
+  }
+
+  ngAfterViewInit(): void {
+    console.log('app init', this.genspace);
+    document.addEventListener('selectionchange', (ev) => {
+      const el = document.activeElement as HTMLInputElement;
+
+      console.warn(
+        'SELCHG',
+        el.selectionStart,
+        el.selectionEnd,
+        el.selectionDirection,
+        ev
+      );
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -96,7 +114,10 @@ export class AppComponent implements AfterViewChecked {
     return el.querySelector('#ifield') ?? undefined;
   }
 
-  findComponent(el: Element) {}
+  findComponentMeta() {
+    const metainfo = this.inputField.injector.get(typeInjectionToken);
+    return metainfo;
+  }
 
   blurCB(ev: Event) {
     // console.log('blurring', ev.target);
@@ -116,11 +137,15 @@ export class AppComponent implements AfterViewChecked {
     console.log('onVisiChg', ev);
   }
 
-  onComplete(ev: Event & { query: string }) {
-    const filtered = allData.filter((sugg) =>
-      ((sugg as any).name ?? '').startsWith(ev.query)
-    );
-    console.log('complete', ev.query, filtered);
-    this.valueProvider.suggestions = filtered;
+  onMetaClick(ev: Event) {
+    this.genspace.clear();
+    const metainfo = this.findComponentMeta();
+    console.log('metainfo is ', metainfo);
+    const ref = this.genspace.createComponent(metainfo.typeCtor, {});
+    this.genspace.insert(ref.hostView);
+  }
+
+  onClearClick() {
+    this.genspace.clear();
   }
 }

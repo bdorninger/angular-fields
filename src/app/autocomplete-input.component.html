@@ -1,0 +1,10 @@
+<p-autoComplete
+  inputId="ifield"
+  [(ngModel)]="valueProvider.value"
+  [showEmptyMessage]="true"
+  [suggestions]="valueProvider.suggestions"
+  (completeMethod)="onComplete($event)"
+  (change)="valueProvider.onChange($event)"
+  [minLength]="1"
+  field="name"
+></p-autoComplete>

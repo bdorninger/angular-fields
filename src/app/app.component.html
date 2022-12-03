@@ -7,8 +7,11 @@
   <div>
     <label>{{ name }}</label>
   </div>
+
   <textarea #textArea></textarea>
   <button (click)="onFocBtClick()">focus</button>
+  <button (click)="onMetaClick($event)">meta</button>
+  <button (click)="onClearClick()">clear</button>
   <div id="cbgroup" (focusout)="onCBLostFocus($event)">
     <label for="sel">Select input</label>
     <input
@@ -19,33 +22,29 @@
     />
   </div>
   <div>
-    <p-autoComplete
+    <autocomplete-input
+      class="foo"
       *ngIf="!inputSelector"
       #inputField
+      compMeta
       trackVisibility
       (visibility)="onVisibilityChange($event)"
-      inputId="ifield"
-      [(ngModel)]="valueProvider.value"
-      [showEmptyMessage]="true"
-      [suggestions]="valueProvider.suggestions"
-      (completeMethod)="onComplete($event)"
-      (change)="valueProvider.onChange($event)"
-      [minLength]="1"
-      field="name"
-    ></p-autoComplete>
+      [valueProvider]="valueProvider"
+    ></autocomplete-input>
   </div>
   <div>
-    <p-inputNumber
-      class="num"
+    <num-input
       *ngIf="inputSelector"
+      #inputField
+      compMeta
       trackVisibility
       (visibility)="onVisibilityChange($event)"
-      #inputField
-      inputId="ifield"
-      [(ngModel)]="valueProvider.value"
-      (change)="valueProvider.onChange($event)"
-      [minFractionDigits]="0"
-      [maxFractionDigits]="2"
-    ></p-inputNumber>
+      [valueProvider]="valueProvider"
+    ></num-input>
   </div>
 </div>
+<span>-----------------------</span>
+<div #genspace></div>
+<p>
+  <span>-----------------------</span>
+</p>

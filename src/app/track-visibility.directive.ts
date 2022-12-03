@@ -33,17 +33,8 @@ export class TrackVisibilityDirective implements OnInit, OnDestroy {
   @Output()
   public readonly visibility = new EventEmitter<VisibilityTrackEvent>();
 
-  constructor(
-    @Host()
-    @Self()
-    @Optional()
-    @Inject(typeInjectionToken)
-    private hostComp: ComponentMeta | null,
-    private el: ElementRef<HTMLElement>,
-    private ngZone: NgZone
-  ) {
+  constructor(private el: ElementRef<HTMLElement>, private ngZone: NgZone) {
     // console.log('trackVisDir', this.el, this.ngZone);
-    console.log(`dir ctor`, (this.hostComp as any)._lContainer, this.hostComp);
   }
 
   public ngOnInit(): void {

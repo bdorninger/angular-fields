@@ -1,0 +1,10 @@
+<p-inputNumber
+  #inputField
+  class="num"
+  [cqdir]="componentType"
+  inputId="ifield"
+  [(ngModel)]="valueProvider.value"
+  (change)="valueProvider.onChange($event)"
+  [minFractionDigits]="0"
+  [maxFractionDigits]="2"
+></p-inputNumber>

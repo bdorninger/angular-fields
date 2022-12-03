@@ -10,6 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TrackVisibilityDirective } from './track-visibility.directive';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { FocusTrapModule } from 'primeng/focustrap';
+import { NumInputComponent } from './numinput.component';
+import { ComponentMetaDirective } from './comp-meta.directive';
+import { AutoCompleteInputComponent } from './autocomplete-input.component';
+import { CompQueryDirective } from './comp-query.directive';
 
 @NgModule({
   imports: [
@@ -21,7 +25,15 @@ import { FocusTrapModule } from 'primeng/focustrap';
     AutoFocusModule,
     FocusTrapModule,
   ],
-  declarations: [AppComponent, HelloComponent, TrackVisibilityDirective],
+  declarations: [
+    AppComponent,
+    HelloComponent,
+    TrackVisibilityDirective,
+    NumInputComponent,
+    AutoCompleteInputComponent,
+    ComponentMetaDirective,
+    CompQueryDirective,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

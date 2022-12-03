@@ -2,10 +2,3 @@
   display: grid;
   row-gap: 10px;
 }
-
-.num {
-  max-width: 50%;
-  border-color: red;
-  border-style: dashed;
-  border: 1px 1px;
-}
