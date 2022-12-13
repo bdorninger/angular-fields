@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// fo
+// foo
 @Component({
   selector: 'mcomp',
   template: '',
