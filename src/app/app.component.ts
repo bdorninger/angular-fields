@@ -1,4 +1,10 @@
 import {
+  formatNumber,
+  getLocaleNumberSymbol,
+  NumberSymbol,
+} from '@angular/common';
+
+import {
   AfterViewChecked,
   AfterViewInit,
   Component,
@@ -44,6 +50,12 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
   outerCont: ElementRef;
   */
 
+  @ViewChild('nif', {
+    read: ElementRef,
+    static: false,
+  })
+  nif: ElementRef<HTMLInputElement>;
+
   @ViewChild('inputField', {
     read: ViewContainerRef,
     static: false,
@@ -54,6 +66,10 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
     this.inputSelector = false;
   }
 
+  onNumberChg(ev: Event) {
+    console.log('number change', (ev.target as any).value, ev);
+  }
+
   onFocusIn(event: FocusEvent) {
     console.log('FOCUS IN', event);
   }
@@ -62,7 +78,7 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
     console.log('app init', this.genspace);
     document.addEventListener('selectionchange', (ev) => {
       const el = document.activeElement as HTMLInputElement;
-
+      /*
       console.warn(
         'SELCHG',
         el.selectionStart,
@@ -70,6 +86,7 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
         el.selectionDirection,
         ev
       );
+      */
     });
   }
 
@@ -96,6 +113,11 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
     console.log('click', ev.composedPath(), ev);
   }
 
+  onPointer(event: Event) {
+    const ev = event as PointerEvent;
+    console.log(ev.type, ev.buttons, ev.button, ev);
+  }
+
   onFocBtClick(ev?: Event) {
     console.log('Focus Button:', this.inputField.element.nativeElement);
     const ie = this.findInputElement(
@@ -119,9 +141,18 @@ export class AppComponent implements AfterViewInit, AfterViewChecked {
     return metainfo;
   }
 
-  blurCB(ev: Event) {
+  checkSelChg(ev: Event) {
+    let current = this.nif.nativeElement.valueAsNumber;
+    current = isNaN(current) ? 0.9 : current + 0.1;
+    this.nif.nativeElement.value = `${current.toPrecision(2)}`;
     // console.log('blurring', ev.target);
     // (ev.target as HTMLElement).blur();
+
+    // console.log('ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ', formatNumber(234.56, 'es'));
+    console.log(
+      'ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ',
+      getLocaleNumberSymbol('es', NumberSymbol.Decimal)
+    );
   }
 
   get inputSelector(): boolean {

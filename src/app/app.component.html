@@ -3,13 +3,23 @@
   class="outer-container"
   pFocusTrap
   (click)="onClick($event)"
+  (pointerdown)="onPointer($event)"
+  (pointerup)="onPointer($event)"
 >
   <div>
     <label>{{ name }}</label>
   </div>
 
+  <input
+    #nif
+    type="number"
+    value="0.5"
+    (change)="onNumberChg($event)"
+    lang="en-US"
+    step="0.1"
+  />
   <textarea #textArea></textarea>
-  <button (click)="onFocBtClick()">focus</button>
+  <button (click)="onFocBtClick()">focus1</button>
   <button (click)="onMetaClick($event)">meta</button>
   <button (click)="onClearClick()">clear</button>
   <div id="cbgroup" (focusout)="onCBLostFocus($event)">
@@ -18,7 +28,7 @@
       id="sel"
       type="checkbox"
       [(ngModel)]="inputSelector"
-      (change)="blurCB($event)"
+      (change)="checkSelChg($event)"
     />
   </div>
   <div>

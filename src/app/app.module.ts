@@ -15,6 +15,10 @@ import { ComponentMetaDirective } from './comp-meta.directive';
 import { AutoCompleteInputComponent } from './autocomplete-input.component';
 import { CompQueryDirective } from './comp-query.directive';
 
+import '@angular/common/locales/global/fr';
+import '@angular/common/locales/global/it';
+import '@angular/common/locales/global/de';
+
 @NgModule({
   imports: [
     BrowserModule,

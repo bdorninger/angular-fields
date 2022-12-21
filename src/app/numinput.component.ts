@@ -50,7 +50,19 @@ export class NumInputComponent extends MetaComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const natElem = this.inputField.nativeElement as HTMLElement;
+    natElem.setAttribute('data-evs-options', '{ "fraction": 50 }');
+    natElem.setAttribute('data-evsInfo', 'NumInputComponent');
+    natElem.dataset['myData'] = 'NIXWASDA';
     const t = natElem.getAttribute('ng-reflect-comp-type');
-    console.log('####input field elem', this.inputField, t, typeof t);
+    console.log(
+      '####input field elem',
+      this.inputField,
+      t,
+      typeof t,
+      natElem.dataset,
+      natElem.dataset.myData,
+      natElem.dataset.mydata,
+      JSON.parse(natElem.dataset.evsOptions)
+    );
   }
 }
